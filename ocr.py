@@ -1,6 +1,3 @@
-
-
-
 #Code for OCR, PASS the complete filepath as the argument. 
 from havenondemand.hodclient import *
 def ocr(filepath):
@@ -11,7 +8,7 @@ def ocr(filepath):
     paramArr["file"] = filepath
     paramArr["mode"] = "document_photo"
 
-    response = hodClient.post_request(paramArr, hodApp, async=False)
+    response = hodClient.post_request(paramArr, hodApp, async=True)
 
     if response is None:
             error = hodClient.get_last_error();
@@ -26,6 +23,23 @@ def ocr(filepath):
                             print ("Error code: %d \nReason: %s \nDetails: %s\njobID: %s\n" % (err.error, err.reason, err.detail, err.jobID))
             else:
                     texts = response["text_block"]
-                    resp = ""
+                    texts = texts.lstrip()
+                    REPLACEMENTS =  [
+                                     ("&quot;", "\"")
+                                    ,("&apos;", "'")
+                                    ,("&amp;", "&")
+                                    ,("&lt;", "<")
+                                    ,("&gt;", ">")
+                                    ,( "&laquo;", "<<")
+                                    ,("&raquo;", ">>")
+                                    ,("&#039;", "'")
+                                    ,("&#8220;", "\"")
+                                    ,("&#8221;", "\"")
+                                    ,("&#8216;", "\'")
+                                    ,("&#8217;", "\'")
+                                    ,("&#9632;", "")
+                                    ,("&#8226;", "-")
+                                    ]
+                    for entity, replacement in REPLACEMENTS:
+                        texts = texts.replace(entity, replacement)
                     return texts
-    
