@@ -23,5 +23,23 @@ def ocr(filepath):
                             print ("Error code: %d \nReason: %s \nDetails: %s\njobID: %s\n" % (err.error, err.reason, err.detail, err.jobID))
             else:
                     texts = response["text_block"]
-                    resp = ""
+                    texts = texts.lstrip()
+                    REPLACEMENTS =  [
+                                     ("&quot;", "\"")
+                                    ,("&apos;", "'")
+                                    ,("&amp;", "&")
+                                    ,("&lt;", "<")
+                                    ,("&gt;", ">")
+                                    ,( "&laquo;", "<<")
+                                    ,("&raquo;", ">>")
+                                    ,("&#039;", "'")
+                                    ,("&#8220;", "\"")
+                                    ,("&#8221;", "\"")
+                                    ,("&#8216;", "\'")
+                                    ,("&#8217;", "\'")
+                                    ,("&#9632;", "")
+                                    ,("&#8226;", "-")
+                                    ]
+                    for entity, replacement in REPLACEMENTS:
+                        texts = texts.replace(entity, replacement)
                     return texts
