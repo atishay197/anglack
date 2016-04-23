@@ -235,9 +235,22 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                     JSONArray textArray = result.getJSONArray("face");
                     count = textArray.length();
                     if (count > 0) {
-                        edTextResult.setText("The Number of People In Front "+count);
+
                         int toLeft = 0;
                         int toRight = 0;
+                        Log.d("tAG",width+"");
+                        for (i = 0; i < count; i++) {
+                            JSONObject obj = textArray.getJSONObject(i);
+                            int l = Integer.parseInt(obj.getString("left"));
+                            if (l < width/2){
+                                toLeft++;
+                            }
+                            else{
+                                toRight++;
+                            }
+                        }
+                        edTextResult.setText("The Number of People In Front "+count+" "+toLeft+" to the left "+toRight+" to the right");
+
                     }
                     else {
                         edTextResult.setText("Some stupid error\n");
@@ -352,13 +365,15 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
     }
 
 
+    private int width, height;
 
     public Bitmap decodeFile(String path) {
         try {
             // Decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(path, o);
+            Bitmap bp = BitmapFactory.decodeFile(path, o);
+
             // The new size we want to scale to
             final int REQUIRED_SIZE = 500;
 
@@ -441,7 +456,7 @@ public class MainActivity extends Activity implements TextToSpeech.OnInitListene
                     // If it's too large, we can optimize it
                     int w = mCurrentSelectedBitmap.getWidth();
                     int h = mCurrentSelectedBitmap.getHeight();
-
+                    width = w;
                     int length = (w > h) ? w : h;
                     if (length > OPTIMIZED_LENGTH) {
                         // let's resize the image
