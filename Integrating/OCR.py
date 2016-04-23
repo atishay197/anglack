@@ -22,7 +22,8 @@ def ocr(filepath):
                     for err in error.errors:
                             print ("Error code: %d \nReason: %s \nDetails: %s\njobID: %s\n" % (err.error, err.reason, err.detail, err.jobID))
             else:
-                    texts = response["text_block"]
+                    texts = str(response["text_block"])
+                    print texts
                     texts = texts.lstrip()
                     REPLACEMENTS =  [
                                      ("&quot;", "\"")

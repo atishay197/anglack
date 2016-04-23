@@ -18,34 +18,32 @@ engine=pyttsx.init()
 #SummarizerContent=OCRContent
 
 #Text 2 Speech
-'''
-engine=pyttsx.init()
-engine.say("Do you want to Summarize the data?")
-engine.runAndWait()
 
-SpeechContent=s2Text(filepath_speech)
+# engine=pyttsx.init()
+# engine.say("Do you want to Summarize the data?")
+# engine.runAndWait()
 
-SpeechContent.lower()
-if(SpeechContent=="yes"):
-	OCRContent=ocr(filepath_ocr)
-	SummarizerContent=OCRContent
+# SpeechContent=s2Text(filepath_speech)
+
+# SpeechContent.lower()
+# if(SpeechContent=="yes"):
+# 	OCRContent=ocr(filepath_ocr)
+# 	SummarizerContent=OCRContent
 	
-	engine.say(SummarizerContent)
-	engine.runAndWait()
+# 	engine.say(SummarizerContent)
+# 	engine.runAndWait()
 
-else:
-	OCRContent=ocr(filepath_ocr)
-	engine.say(OCRContent)
-	engine.runAndWait()
-
-
-'''
-
-
-FaceContent=faceCount(filepath_face)
-print(FaceContent)
-engine.say(FaceContent)
+# else:
+OCRContent=ocr(filepath_ocr)
+engine.say(OCRContent)
 engine.runAndWait()
+
+
+
+# FaceContent=faceCount(filepath_face)
+# print(FaceContent)
+# engine.say(FaceContent)
+# engine.runAndWait()
 
 
 
