@@ -7,18 +7,27 @@ from Summarizer import summarizeMe
 import pyttsx
 from OpenCamera import Camera
 
+
 filepath_face="pics/face/1.JPG"
 filepath_ocr="pics/text/2.png"
 filepath_speech="speech/1.wma"
 
-Camera(filepath_face)
+
+
+
 engine=pyttsx.init()
 
 button=1 #for button1
 tap=1
 engine=pyttsx.init()
-if(button==1):
-	engine.say("Do you want to Summarize the data? Single tap the mouse for yes and double tap for no")
+OCRContent=ocr(filepath_ocr)
+if(button==2):
+
+	engine.say("You Have selected to read, Switching on camera..., Press Escape to Capture")
+
+	engine.runAndWait()
+	Camera(filepath_face)
+	engine.say("Do you want to Summarize the data you just snapped? Single tap the mouse for yes and double tap for no")
 	engine.runAndWait()
 	if(tap==1):
 		engine.say("You have selected For Summarizing")
@@ -32,7 +41,20 @@ if(button==1):
 		engine.say("You have selected For Non-Summarizing")
 		engine.runAndWait()
 		OCRContent=ocr(filepath_ocr)
-		SummarizerContent=summarizeMe(OCRContent)
+		engine.say(OCRContent)
+		engine.runAndWait()
+		
+else:
+	
+	engine.say("You Have selected observer the environment, Switching on camera... Press escape to Capture")
+	engine.runAndWait()
+	Camera(filepath_face)
+	FaceContent=faceCount(filepath_face)
+	print(FaceContent)
+	engine.say(FaceContent)
+	engine.runAndWait()
+	
+
 
 
 	
@@ -103,10 +125,7 @@ else:
 
 
 
-FaceContent=faceCount(filepath_face)
-print(FaceContent)
-engine.say(FaceContent)
-engine.runAndWait()
+
 
 
 
