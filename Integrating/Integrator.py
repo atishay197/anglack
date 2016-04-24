@@ -10,17 +10,19 @@ from OpenCamera import Camera
 
 
 f=open('button.txt','r')
-print f
+#print f
 button=int(f.read()) 
-print(button)
+#print(button)
 tap=1
 
-filepath="pics/img.JPG"
+filepath="pics/img.png"
 
 filepath_speech="speech/1.wma"
 
 
 engine=pyttsx.init()
+rate=engine.getProperty('rate')
+engine.setProperty('rate',rate)
 
 engine.say("Hello and welcome")
 
@@ -32,36 +34,53 @@ engine.runAndWait()
 
 engine=pyttsx.init()
 
-if(button==1):
+engine.say("Do you want to know whats arround you? or you want to read something? Press F for surroundings and j for Reading!!")
+engine.runAndWait()
 
-	engine.say("You Have selected to reead, Switching on camera..., Press Escape to Capture")
+print("Do you want to know whats arround you? or you want to read something? Press F for surroundings and j for Reading!!")
+
+button=raw_input()
+
+
+
+if(button=='j'):
+
+	engine.say("You Have selected to reed, Switching on camera..., Press Escape to Capture")
 
 	engine.runAndWait()
 	Camera(filepath)
 
 	OCRContent=ocr(filepath)
 
-	engine.say("Do you want to Summarize the data you just snapped? Single tap the mouse for yes and double tap for no")
+	engine.say("Do you want to Summarize the data you just snapped? Press F for Yes and J for no")
 	engine.runAndWait()
+	input1=raw_input()
+
 	#time.sleep(20)
-	if(0):
+	if(input1=='f'):
 		engine.say("You have selected For Summarizing")
 		engine.runAndWait()
 		SummarizerContent=summarizeMe(OCRContent)
-		print(SummarizerContent.encode('utf-8'))
 		engine.say(SummarizerContent)
 		engine.runAndWait()
+		print(SummarizerContent.encode('utf-8'))
 
-	else:
+	elif(input1=='j'):
 
 		engine.say("You have selected For NOT-Summarizing")
 		engine.runAndWait()
-		print (OCRContent)
+		print (OCRContent.encode('utf-8'))
 		engine.say(OCRContent)
 		engine.runAndWait()
+
+	else:
+		engine.say("YOU only had to press between f or j GEnius.")
+		engine.runAndWait()
+
+
 		
 else:
-	
+
 	engine.say("You Have selected   observe the environment, Switching on camera... Press escape to Capture")
 	engine.runAndWait()
 	Camera(filepath)
@@ -71,8 +90,15 @@ else:
 	FaceContent=faceCount(filepath)
 	print(FaceContent)
 	engine.say(FaceContent)
+
 	engine.runAndWait()
-	
+
+
+
+	engine.say("Thank-You for using this")
+	engine.runAndWait()
+
+
 
 
 

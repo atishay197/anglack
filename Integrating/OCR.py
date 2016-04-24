@@ -5,7 +5,8 @@ def ocr(filepath):
 
     hodApp = HODApps.OCR_DOCUMENT
     paramArr = {}
-    paramArr["file"] = filepath
+    paramArr["file"] = "1.png"
+    #paramArr["file"] = filepath
     paramArr["mode"] = "document_photo"
 
     response = hodClient.post_request(paramArr, hodApp, async=True)
@@ -47,4 +48,4 @@ def ocr(filepath):
                         texts = texts.replace(entity, replacement)
                     print "\n"
                     #print texts.encode('utf-8')
-                    return text
+                    return texts
