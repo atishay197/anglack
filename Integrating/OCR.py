@@ -47,4 +47,4 @@ def ocr(filepath):
                         texts = texts.replace(entity, replacement)
                     print "\n"
                     #print texts.encode('utf-8')
-                    return texts.encode('utf-8')
+                    return text
